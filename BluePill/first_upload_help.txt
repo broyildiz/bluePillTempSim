@@ -1,0 +1,5 @@
+jumper closest to the usb connector connected to 0
+the other jumper to 1
+upload
+press reset
+done keep it this way
