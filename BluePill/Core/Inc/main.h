@@ -61,6 +61,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 #include "stdio.h"
 #include "string.h"
+#include <stdlib.h>
 
 #define BYTE_BUFLEN 	 1
 #define LINE_BUFLEN 	 1024

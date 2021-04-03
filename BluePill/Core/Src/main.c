@@ -110,6 +110,10 @@ int main(void)
 	  {
 		  input.command_execute_flag = FALSE;
 		  FL_uart_decode();
+		  printf("back in main.c\n");
+		  printf("Command set_res contents:\n");
+		  printf("\tdigipot   : %d\n", command.set_res_cmd.digipot_no);
+		  printf("\tresistance: %d\n", command.set_res_cmd.res);
 
 	  }
 
