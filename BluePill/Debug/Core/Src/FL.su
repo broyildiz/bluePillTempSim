@@ -1,0 +1,3 @@
+FL.c:10:5:FL_uart_decode	24	static
+FL.c:85:5:FL_get_cmd	32	static
+FL.c:104:5:FL_convert_args	16	static
