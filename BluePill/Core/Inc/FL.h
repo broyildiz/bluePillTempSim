@@ -17,9 +17,19 @@
 #define SET_RES_ARGS		2
 #define MAX_ARGS 			10
 #define MAX_ARG_LEN			128
+
+/*
+ * arg_buffer is essentially a 2D array.
+ * It holds a pointer to a pointer to a string (from strtok() )
+ * single_arg will hold one of these strings
+ * The atoi function expects a char. If arg_buffer was used directly, this
+ * would result in a warning: atoi makes pointer from integer without a cast
+ * because arg_buffer is of the type char **
+ * It would probably be smarter to use a 2D array, but this works for now
+ */
 char *arg_buffer[MAX_ARGS];
-int arg_cnt;
 char single_arg[MAX_ARG_LEN];
+int arg_cnt;
 
 typedef struct
 {
