@@ -59,6 +59,8 @@ void Error_Handler(void);
 
 /* Private defines -----------------------------------------------------------*/
 /* USER CODE BEGIN Private defines */
+#include "stdio.h"
+#include "string.h"
 
 #define BYTE_BUFLEN 	 1
 #define LINE_BUFLEN 	 1024
@@ -72,7 +74,7 @@ void Error_Handler(void);
 typedef struct
 {
 	uint8_t byte_buffer_rx[BYTE_BUFLEN];	// Store the rx byte from the USART2
-	uint8_t line_rx_buffer[LINE_BUFLEN];	// Buffer to hold all the bytes from rx USART2
+	char line_rx_buffer[LINE_BUFLEN];	// Buffer to hold all the bytes from rx USART2
 	int msglen;
 	volatile int char_counter;				// Counter for line_rx_buffer
 	char command_execute_flag;				/* Set = whole function is received, ready for processing \
@@ -84,6 +86,8 @@ input_vars input;
 volatile char container[1024];
 volatile int temp;
 volatile int key;
+
+#include "FL.h"
 
 /* USER CODE END Private defines */
 

@@ -108,8 +108,9 @@ int main(void)
   {
 	  if(input.command_execute_flag == TRUE)
 	  {
-		  printf("hay?\n\r");
 		  input.command_execute_flag = FALSE;
+		  FL_uart_decode();
+
 	  }
 
     /* USER CODE END WHILE */
