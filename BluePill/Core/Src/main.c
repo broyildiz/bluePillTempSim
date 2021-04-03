@@ -90,13 +90,28 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+	int i;
+	for(i = 0; i < LINE_BUFLEN; i++)
+		input.line_rx_buffer[i] = 0;
+
+	// Reset some stuff
+	input.byte_buffer_rx[0] = 0;
+	input.char_counter = 0;
+	input.command_execute_flag = FALSE;
+	HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  printf("hmm?\n\r");
+	  if(input.command_execute_flag == TRUE)
+	  {
+		  printf("hay?\n\r");
+		  input.command_execute_flag = FALSE;
+	  }
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
