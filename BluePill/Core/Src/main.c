@@ -104,7 +104,7 @@ int main(void)
 	input.byte_buffer_rx[0] = 0;
 	input.char_counter = 0;
 	input.command_execute_flag = FALSE;
-	debug_enable = FALSE;
+	debug_enable = TRUE;
 	command.i2c_scan_cmd.i2c_handle = hi2c2;
 	HAL_UART_Receive_IT(&huart2, input.byte_buffer_rx, BYTE_BUFLEN);
 
@@ -121,6 +121,8 @@ int main(void)
   {
 	  if(input.command_execute_flag == TRUE)
 	  {
+		  HAL_GPIO_TogglePin(DebugLed_GPIO_Port, DebugLed_Pin);
+		  FL_debug("");
 		  input.command_execute_flag = FALSE;
 		  error = FL_uart_decode();
 
@@ -135,7 +137,8 @@ int main(void)
 		  printf("\tresistance: %d\n", command.set_res_cmd.res);
 
 		  LL_exec();
-
+		  FL_clean(hi2c2);
+		  HAL_GPIO_TogglePin(DebugLed_GPIO_Port, DebugLed_Pin);
 	  }
 
     /* USER CODE END WHILE */
@@ -257,11 +260,22 @@ static void MX_USART2_UART_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
+  GPIO_InitTypeDef GPIO_InitStruct = {0};
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
+
+  /*Configure GPIO pin Output Level */
+  HAL_GPIO_WritePin(DebugLed_GPIO_Port, DebugLed_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pin : DebugLed_Pin */
+  GPIO_InitStruct.Pin = DebugLed_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(DebugLed_GPIO_Port, &GPIO_InitStruct);
 
 }
 

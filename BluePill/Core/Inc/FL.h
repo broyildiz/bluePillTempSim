@@ -54,7 +54,7 @@ struct collection
 	set_res_struct set_res_cmd;
 }command;
 
-//void FL_init();
+void FL_clean(I2C_HandleTypeDef hi2c2);
 int FL_uart_decode();
 int FL_get_cmd(char *str);
 int FL_convert_args(int cmd_no, char **args);

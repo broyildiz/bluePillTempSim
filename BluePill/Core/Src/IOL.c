@@ -20,12 +20,12 @@ void IOL_set_res()
 		default:
 		{
 			FL_error_handler("IOL.c", "IOL_set_res", "Unsupported digipot number");
-			wiper = 0x00;
+			wiper = 0x10;
 		}break;
 	}
 
 	uint16_t addr = 0x2c << 1;
-	uint8_t tx[] = { wiper, command.set_res_cmd.res};
+	uint8_t tx[] = { wiper << 4, (uint8_t)command.set_res_cmd.res};
 	uint16_t num = 2;
 	HAL_I2C_Master_Transmit(&command.i2c_scan_cmd.i2c_handle, addr, tx, num, HAL_MAX_DELAY );
 

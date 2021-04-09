@@ -7,6 +7,16 @@
 
 #include "FL.h"
 
+void FL_clean(I2C_HandleTypeDef hi2c2)
+{
+	int i;
+	memset(&command, 0, sizeof(command));
+	command.i2c_scan_cmd.i2c_handle = hi2c2;
+	for(i = 0; i < LINE_BUFLEN; i++)
+		input.line_rx_buffer[i] = 0;
+
+}
+
 int FL_uart_decode()
 {
 	FL_debug("Entered FL_uart_decode function");
@@ -41,7 +51,7 @@ int FL_uart_decode()
 	{
 		for(i = 0; i < arg_cnt; i++)
 		{
-			printf("Arg buffer [%d] = %s", i, arg_buffer[i]);
+			printf("Arg buffer [%d] = %s\n", i, arg_buffer[i]);
 		}
 	}
 
@@ -132,12 +142,12 @@ int FL_convert_args(int cmd_no, char **args)
 			// See FL.h for more details
 			strcpy(single_arg, args[1]);
 			if(debug_enable)
-				printf("Single arg = %s", single_arg);
+				printf("Single arg = %s\n", single_arg);
 			command.set_res_cmd.digipot_no = atoi(single_arg);
 
 			strcpy(single_arg, args[2]);
 			if(debug_enable)
-				printf("Single arg = %s", single_arg);
+				printf("Single arg = %s\n", single_arg);
 			command.set_res_cmd.res = atoi(single_arg);
 
 		}break;
