@@ -88,8 +88,11 @@ volatile char container[1024];
 volatile int temp;
 volatile int key;
 
+char debug_enable;
+
 #include "FL.h"
 #include "LL.h"
+#include "IOL.h"
 
 /* USER CODE END Private defines */
 

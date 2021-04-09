@@ -5,6 +5,7 @@
  *      Author: Ömer
  */
 
+
 #include "LL.h"
 
 int LL_exec()
@@ -13,6 +14,12 @@ int LL_exec()
 	{
 	case COMMAND_SET_RES:
 	{
+		IOL_set_res();
+		printf("Executed COMMAND_SET_RES\n");
+	}break;
+	case COMMAND_I2C_SCAN:
+	{
+		IOL_i2c_scan();
 		printf("Executed COMMAND_SET_RES\n");
 	}break;
 	default:

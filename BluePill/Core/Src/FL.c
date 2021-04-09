@@ -9,6 +9,8 @@
 
 int FL_uart_decode()
 {
+	FL_debug("Entered FL_uart_decode function");
+
 	char delim[2] = ","; 	// This string will be used to parse the main input string
 	char *token;			// This pointer will hold current parsed string
 	memset(arg_buffer, '\0', sizeof(arg_buffer));
@@ -35,9 +37,12 @@ int FL_uart_decode()
 
 	// Some debugging
 	int i;
-	for(i = 0; i < arg_cnt; i++)
+	if(debug_enable)
 	{
-		printf("Arg buffer [%d] = %s \n", i, arg_buffer[i]);
+		for(i = 0; i < arg_cnt; i++)
+		{
+			printf("Arg buffer [%d] = %s", i, arg_buffer[i]);
+		}
 	}
 
 	// The first argument is the name of the command
@@ -46,7 +51,7 @@ int FL_uart_decode()
 
 	if(command.cmd_no == COMMAND_ERROR)
 	{
-		printf("Command error\n");
+		FL_error_handler("FL.c", "FL_uart_decode","Unsupported Command");
 		return -1;
 	}
 
@@ -62,7 +67,7 @@ int FL_uart_decode()
 		{
 			if(arg_cnt != SET_RES_ARGS)
 			{
-				printf("ERROR: Wrong number of arguments arguments\n");
+				FL_error_handler("FL.c", "FL_uart_decode","Wrong number of arguments arguments\n");
 				printf("Expected %d arguments, got %d arguments\n", SET_RES_ARGS, arg_cnt);
 			}
 			else
@@ -70,11 +75,16 @@ int FL_uart_decode()
 				FL_convert_args(command.cmd_no, arg_buffer);
 			}
 		}break;
+		case COMMAND_I2C_SCAN:
+		{
+			// No arguments to gather
+		}break;
 		default:
 		{
-			printf("Don't know\n");
+			FL_debug("Don't know about this default case1");
 		}
 	}
+	FL_debug("Exiting FL_uart_decode function");
 	return 0;
 }
 
@@ -84,26 +94,36 @@ int FL_uart_decode()
  */
 int FL_get_cmd(char *str)
 {
+	FL_debug("Entered FL_get_cmd function");
+
 	char set_res[] = "set_res";
-	int ret;
+	char i2c_scan[] = "i2c_scan";
+	int ret = COMMAND_ERROR;
 
 	if(strcmp(str, set_res) == 0)
 	{
-		printf("command = set_res\n");
+		FL_debug("command = set_res");
 		ret = COMMAND_SET_RES;
 	}
-	else
-	{
-		printf("command = unrecognized\n");
-		ret = COMMAND_ERROR;
-	}
 
+	if(strcmp(str, i2c_scan) == 0)
+	{
+		FL_debug("command = set_res");
+		ret = COMMAND_I2C_SCAN;
+	}
+//		else
+//		{
+//			FL_debug("command = unrecognized");
+//			ret = COMMAND_ERROR;
+//		}
+
+	FL_debug("Exiting FL_get_cmd function");
 	return ret;
 }
 
 int FL_convert_args(int cmd_no, char **args)
 {
-
+	FL_debug("Entered FL_convert_args function");
 	switch(cmd_no)
 	{
 		case COMMAND_SET_RES:
@@ -111,20 +131,37 @@ int FL_convert_args(int cmd_no, char **args)
 			// Copy a string from args into single_arg.
 			// See FL.h for more details
 			strcpy(single_arg, args[1]);
-			printf("Single arg = %s\n", single_arg);
+			if(debug_enable)
+				printf("Single arg = %s", single_arg);
 			command.set_res_cmd.digipot_no = atoi(single_arg);
 
 			strcpy(single_arg, args[2]);
-			printf("Single arg = %s\n", single_arg);
+			if(debug_enable)
+				printf("Single arg = %s", single_arg);
 			command.set_res_cmd.res = atoi(single_arg);
 
 		}break;
 		default:
 		{
-			printf("Don't know 2\n");
+			FL_debug("Don't know about this default case2");
 		}
 	}
 
-
 	return 0;
+	FL_debug("Exiting FL_convert_args function");
+}
+
+
+void FL_error_handler(char *file_name, char *function_name, char *msg)
+{
+	printf("ERROR in %s\t%s\n", file_name, function_name);
+	printf("message:\t%s\n", msg);
+}
+
+void FL_debug(char *s)
+{
+	if(debug_enable)
+	{
+		printf("%s\n",s);
+	}
 }
