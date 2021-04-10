@@ -7,11 +7,12 @@
 
 #include "FL.h"
 
-void FL_clean(I2C_HandleTypeDef hi2c2)
+void FL_clean(I2C_HandleTypeDef hi2c2, ADC_HandleTypeDef hadc1)
 {
 	int i;
 	memset(&command, 0, sizeof(command));
 	command.i2c_scan_cmd.i2c_handle = hi2c2;
+	command.adc_get_cmd.adc_handle = hadc1;
 	for(i = 0; i < LINE_BUFLEN; i++)
 		input.line_rx_buffer[i] = 0;
 
@@ -89,6 +90,10 @@ int FL_uart_decode()
 		{
 			// No arguments to gather
 		}break;
+		case COMMAND_ADC_GET:
+		{
+			// No arguments to gather
+		}break;
 		default:
 		{
 			FL_debug("Don't know about this default case1");
@@ -108,6 +113,7 @@ int FL_get_cmd(char *str)
 
 	char set_res[] = "set_res";
 	char i2c_scan[] = "i2c_scan";
+	char adc_get[] = "adc_get";
 	int ret = COMMAND_ERROR;
 
 	if(strcmp(str, set_res) == 0)
@@ -120,6 +126,11 @@ int FL_get_cmd(char *str)
 	{
 		FL_debug("command = set_res");
 		ret = COMMAND_I2C_SCAN;
+	}
+	if(strcmp(str, adc_get) == 0)
+	{
+		FL_debug("command = set_res");
+		ret = COMMAND_ADC_GET;
 	}
 //		else
 //		{

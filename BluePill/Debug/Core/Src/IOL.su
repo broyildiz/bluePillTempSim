@@ -1,2 +1,3 @@
 IOL.c:10:6:IOL_set_res	24	static
 IOL.c:36:6:IOL_i2c_scan	16	static
+IOL.c:64:6:IOL_adc_get	8	static

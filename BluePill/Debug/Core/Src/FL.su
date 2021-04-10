@@ -1,6 +1,6 @@
-FL.c:10:6:FL_clean	16	static
-FL.c:20:5:FL_uart_decode	24	static
-FL.c:105:5:FL_get_cmd	40	static
-FL.c:134:5:FL_convert_args	16	static
-FL.c:165:6:FL_error_handler	24	static
-FL.c:171:6:FL_debug	16	static
+FL.c:10:6:FL_clean	24	static
+FL.c:21:5:FL_uart_decode	24	static
+FL.c:110:5:FL_get_cmd	48	static
+FL.c:145:5:FL_convert_args	16	static
+FL.c:176:6:FL_error_handler	24	static
+FL.c:182:6:FL_debug	16	static

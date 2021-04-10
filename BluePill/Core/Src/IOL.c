@@ -60,3 +60,10 @@ void IOL_i2c_scan()
 	}
 	printf("\r\n");
 }
+
+void IOL_adc_get()
+{
+		HAL_ADC_Start(&command.adc_get_cmd.adc_handle);
+		HAL_ADC_PollForConversion(&command.adc_get_cmd.adc_handle, HAL_MAX_DELAY);
+		printf("\nADC Value = %d\n\n", HAL_ADC_GetValue(&command.adc_get_cmd.adc_handle));
+}

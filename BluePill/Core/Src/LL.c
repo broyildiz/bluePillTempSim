@@ -22,6 +22,10 @@ int LL_exec()
 		IOL_i2c_scan();
 		printf("Executed COMMAND_SET_RES\n");
 	}break;
+	case COMMAND_ADC_GET:
+	{
+		IOL_adc_get();
+	}break;
 	default:
 	{
 		printf("Dunno 3\n");

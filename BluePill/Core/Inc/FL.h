@@ -14,9 +14,11 @@
 #define COMMAND_ERROR   	0
 #define COMMAND_SET_RES 	1
 #define COMMAND_I2C_SCAN 	2
+#define COMMAND_ADC_GET 	3
 
 #define SET_RES_ARGS		2
 #define I2C_SCAN_ARGS		0
+#define ADC_GET_ARGS		0
 #define MAX_ARGS 			10
 #define MAX_ARG_LEN			128
 
@@ -47,14 +49,20 @@ typedef struct
 	uint16_t addr;
 }i2_scan_struct;
 
+typedef struct
+{
+	ADC_HandleTypeDef adc_handle;
+}adc_get_struct;
+
 struct collection
 {
 	int cmd_no;
 	i2_scan_struct i2c_scan_cmd;
 	set_res_struct set_res_cmd;
+	adc_get_struct adc_get_cmd;
 }command;
 
-void FL_clean(I2C_HandleTypeDef hi2c2);
+void FL_clean(I2C_HandleTypeDef hi2c2, ADC_HandleTypeDef hadc1);
 int FL_uart_decode();
 int FL_get_cmd(char *str);
 int FL_convert_args(int cmd_no, char **args);
