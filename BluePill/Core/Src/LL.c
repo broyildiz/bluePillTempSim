@@ -26,6 +26,10 @@ int LL_exec()
 	{
 		IOL_adc_get();
 	}break;
+	case COMMAND_RES_CALC:
+	{
+		IOL_res_calc();
+	}break;
 	default:
 	{
 		printf("Dunno 3\n");

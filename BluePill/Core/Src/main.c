@@ -136,10 +136,10 @@ int main(void)
 			  FL_error_handler("main.c", "main", "FL_uart_decode() returned an error\n");
 		  }
 
-		  printf("back in main.c\n");
-		  printf("Command set_res contents:\n");
-		  printf("\tdigipot   : %d\n", command.set_res_cmd.digipot_no);
-		  printf("\tresistance: %d\n", command.set_res_cmd.res);
+//		  printf("back in main.c\n");
+//		  printf("Command set_res contents:\n");
+//		  printf("\tdigipot   : %d\n", command.set_res_cmd.digipot_no);
+//		  printf("\tresistance: %d\n", command.set_res_cmd.res);
 
 		  LL_exec();
 		  FL_clean(hi2c2, hadc1);

@@ -94,6 +94,10 @@ int FL_uart_decode()
 		{
 			// No arguments to gather
 		}break;
+		case COMMAND_RES_CALC:
+		{
+			// No arguments to gather
+		}break;
 		default:
 		{
 			FL_debug("Don't know about this default case1");
@@ -114,6 +118,7 @@ int FL_get_cmd(char *str)
 	char set_res[] = "set_res";
 	char i2c_scan[] = "i2c_scan";
 	char adc_get[] = "adc_get";
+	char res_calc[] = "res_calc";
 	int ret = COMMAND_ERROR;
 
 	if(strcmp(str, set_res) == 0)
@@ -124,13 +129,18 @@ int FL_get_cmd(char *str)
 
 	if(strcmp(str, i2c_scan) == 0)
 	{
-		FL_debug("command = set_res");
+		FL_debug("command = i2c_scan");
 		ret = COMMAND_I2C_SCAN;
 	}
 	if(strcmp(str, adc_get) == 0)
 	{
-		FL_debug("command = set_res");
+		FL_debug("command = adc_get");
 		ret = COMMAND_ADC_GET;
+	}
+	if(strcmp(str, res_calc) == 0)
+	{
+		FL_debug("command = res_calc");
+		ret = COMMAND_RES_CALC;
 	}
 //		else
 //		{

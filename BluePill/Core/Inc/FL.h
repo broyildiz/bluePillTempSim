@@ -15,14 +15,14 @@
 #define COMMAND_SET_RES 	1
 #define COMMAND_I2C_SCAN 	2
 #define COMMAND_ADC_GET 	3
+#define COMMAND_RES_CALC 	4
 
 #define SET_RES_ARGS		2
 #define I2C_SCAN_ARGS		0
 #define ADC_GET_ARGS		0
+#define RES_CALC_ARGS		0
 #define MAX_ARGS 			10
 #define MAX_ARG_LEN			128
-
-
 
 /*
  * arg_buffer is essentially a 2D array.
@@ -54,12 +54,18 @@ typedef struct
 	ADC_HandleTypeDef adc_handle;
 }adc_get_struct;
 
+typedef struct
+{
+	char pass; // Nothing for now
+}res_calc_struct;
+
 struct collection
 {
 	int cmd_no;
 	i2_scan_struct i2c_scan_cmd;
 	set_res_struct set_res_cmd;
 	adc_get_struct adc_get_cmd;
+	res_calc_struct res_calc_cmd;
 }command;
 
 void FL_clean(I2C_HandleTypeDef hi2c2, ADC_HandleTypeDef hadc1);

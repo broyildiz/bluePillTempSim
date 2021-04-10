@@ -61,9 +61,46 @@ void IOL_i2c_scan()
 	printf("\r\n");
 }
 
-void IOL_adc_get()
+uint16_t IOL_adc_get()
 {
-		HAL_ADC_Start(&command.adc_get_cmd.adc_handle);
-		HAL_ADC_PollForConversion(&command.adc_get_cmd.adc_handle, HAL_MAX_DELAY);
-		printf("\nADC Value = %d\n\n", HAL_ADC_GetValue(&command.adc_get_cmd.adc_handle));
+	HAL_ADC_Start(&command.adc_get_cmd.adc_handle);
+	HAL_ADC_PollForConversion(&command.adc_get_cmd.adc_handle, HAL_MAX_DELAY);
+	uint16_t ret = HAL_ADC_GetValue(&command.adc_get_cmd.adc_handle);
+	printf("\nADC Value = %d\n\n", (int)ret);
+	return ret;
+}
+
+void IOL_res_calc()
+{
+//	printf("Entering Res Calc Function\n");
+	uint16_t adc = IOL_adc_get();
+	float voltage = remap(adc);
+	printf("ADC to voltage: %f\n", voltage);
+	if(voltage)
+	{
+		float R2 = R1 * ( 1 / ((3.3 / voltage) - 1));
+		printf("Resistance = %f\n", R2);
+	}
+	else
+	{
+		printf("Resistance = 0\n");
+	}
+
+}
+
+
+float remap(uint16_t i)
+{
+  float input_start = 0;
+  float input_end = ADC_RES-1;
+  float output_start = 0.0;
+  float output_end = 3.3;
+  float slope = 0.0;
+
+  float output = 0;
+
+  slope = (output_end - output_start) / (input_end - input_start);
+  output = (output_start + slope * (i -input_start));
+
+  return output;
 }

@@ -17,9 +17,13 @@
 uint16_t adc_buffer[ADC_BUF_SIZE];
 int adc_cnt;
 
+#define R1 9910
+
 void IOL_set_res();
 void IOL_i2c_scan();
-void IOL_adc_get();
+uint16_t IOL_adc_get();
+void IOL_res_calc();
+float remap(uint16_t i);
 
 
 #endif /* INC_IOL_H_ */
